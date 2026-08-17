@@ -1,0 +1,11 @@
+# Quality gates. If any measured metric falls below its floor, `run_eval.py`
+# exits non-zero and CI fails the build. Tighten these as the system improves —
+# a regression that drops retrieval recall then becomes impossible to merge.
+
+# Retrieval metrics run offline (no LLM needed) and always gate CI.
+retrieval_hit_at_k: 0.90      # fraction of questions whose gold doc is retrieved
+retrieval_mrr: 0.80           # mean reciprocal rank of the gold doc
+
+# End-to-end metrics run only when an LLM is configured (e.g. GROQ_API_KEY set).
+answer_keyword_recall: 0.80   # fraction of answers containing an expected fact
+citation_validity: 0.90       # fraction of grounded answers with valid citations

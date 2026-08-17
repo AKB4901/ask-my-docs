@@ -1,0 +1,7 @@
+# B008 flags function calls in argument defaults, but FastAPI's dependency
+# injection (File(...), Depends(...), Query(...)) relies on exactly that
+# pattern, so we ignore it here.
+line-length = 100
+
+[lint]
+ignore = ["B008"]

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ask My Docs — grounded answers with citations</title>
+  <meta name="description" content="A production-grade hybrid RAG system: BM25 + vectors, cross-encoder reranking, enforced citations, and a visible latency trace." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <p class="eyebrow">Retrieval-augmented generation</p>
+        <h1 class="wordmark">Ask My Docs</h1>
+      </div>
+    </div>
+    <div class="corpus-pill" id="corpusPill" title="Indexed corpus">
+      <span class="dot" id="statusDot"></span>
+      <span id="corpusText">connecting…</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2 class="thesis">
+        Answers you can <em>check</em>.
+      </h2>
+      <p class="lede">
+        Ask a question about the document set. Every answer is retrieved with a
+        hybrid of keyword and semantic search, reranked for precision, and made
+        to cite the exact passages it used — or to say when the documents don't
+        have the answer.
+      </p>
+
+      <div class="ask">
+        <label class="sr-only" for="q">Your question</label>
+        <input
+          id="q"
+          type="text"
+          autocomplete="off"
+          placeholder="e.g. How many PTO days do I get, and how many carry over?"
+        />
+        <button id="askBtn" class="btn-ask">Ask</button>
+      </div>
+
+      <div class="suggestions" id="suggestions" aria-label="Example questions">
+        <button class="chip">What's the minimum password length?</button>
+        <button class="chip">Meal allowance in Tokyo?</button>
+        <button class="chip">How do I get production write access?</button>
+        <button class="chip">Can I paste customer PII into an AI tool?</button>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" id="fileInput" accept=".pdf,.txt,.md,.markdown" hidden />
+        <button class="btn-upload" id="uploadBtn">
+          <span class="clip" aria-hidden="true"></span>
+          Upload your own document
+        </button>
+        <span class="upload-hint">PDF, txt, or md — ask questions about your resume, a paper, anything. Private to you.</span>
+        <span class="upload-active" id="uploadActive" hidden>
+          <span id="uploadName" class="mono"></span>
+          <button class="btn-clear" id="clearBtn" title="Back to sample docs">clear ✕</button>
+        </span>
+      </div>
+    </section>
+
+    <section id="result" class="result" hidden aria-live="polite">
+      <!-- Evidence trace — the signature element -->
+      <div class="trace" id="trace" aria-label="Pipeline trace">
+        <span class="trace-title">trace</span>
+        <div class="trace-stages" id="traceStages"></div>
+        <span class="trace-total mono" id="traceTotal"></span>
+      </div>
+
+      <!-- Answer document -->
+      <article class="paper" id="paper">
+        <div class="paper-meta mono">
+          <span class="badge" id="groundBadge"></span>
+          <span class="meta-sep">·</span>
+          <span id="metaLatency"></span>
+          <span class="meta-sep">·</span>
+          <span id="metaCost"></span>
+          <span class="meta-sep">·</span>
+          <span id="metaModel"></span>
+        </div>
+        <div class="answer" id="answer"></div>
+      </article>
+
+      <!-- Sources -->
+      <div class="sources" id="sources"></div>
+    </section>
+
+    <section id="errorBox" class="error" hidden>
+      <p class="error-title">Something needs attention</p>
+      <p class="error-body mono" id="errorBody"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Hybrid retrieval · cross-encoder rerank · citation enforcement · CI-gated eval</span>
+    <span class="mono" id="footerModels"></span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

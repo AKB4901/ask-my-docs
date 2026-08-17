@@ -1,0 +1,12 @@
+{"question": "How many PTO days do full-time employees get per year?", "expected_doc": "03-leave-policy.md", "answer_keywords": ["20"]}
+{"question": "How many unused vacation days can I carry into next year?", "expected_doc": "03-leave-policy.md", "answer_keywords": ["5", "five"]}
+{"question": "What is the minimum password length under the security policy?", "expected_doc": "02-security-policy.md", "answer_keywords": ["14"]}
+{"question": "How quickly must I report a lost laptop?", "expected_doc": "02-security-policy.md", "answer_keywords": ["one hour", "1 hour", "hour"]}
+{"question": "What is the daily meal allowance in high-cost cities like Tokyo?", "expected_doc": "04-expense-policy.md", "answer_keywords": ["80"]}
+{"question": "How much is the one-time home office stipend?", "expected_doc": "04-expense-policy.md", "answer_keywords": ["500"]}
+{"question": "Within how many days must I submit an expense?", "expected_doc": "04-expense-policy.md", "answer_keywords": ["30"]}
+{"question": "How do I get write access to production?", "expected_doc": "01-engineering-onboarding.md", "answer_keywords": ["manager approval", "on-call", "checklist"]}
+{"question": "How much parental leave does a primary caregiver get?", "expected_doc": "03-leave-policy.md", "answer_keywords": ["16 weeks", "16"]}
+{"question": "Can I paste customer PII into an external AI tool?", "expected_doc": "02-security-policy.md", "answer_keywords": ["never", "prohibited", "not", "restricted"]}
+{"question": "How many public holidays does the company observe?", "expected_doc": "03-leave-policy.md", "answer_keywords": ["11"]}
+{"question": "Who needs a corporate card?", "expected_doc": "04-expense-policy.md", "answer_keywords": ["four times", "travel", "4"]}
