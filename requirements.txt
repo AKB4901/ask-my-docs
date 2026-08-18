@@ -4,8 +4,8 @@ uvicorn[standard]==0.34.0
 pydantic==2.10.4
 pydantic-settings==2.7.1
 
-# Retrieval
-sentence-transformers==3.3.1
+# Retrieval (ONNX — no PyTorch, fits a free 512MB host)
+fastembed==0.8.0
 faiss-cpu==1.9.0.post1
 rank-bm25==0.2.2
 numpy==1.26.4

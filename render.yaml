@@ -1,0 +1,16 @@
+# Render deployment blueprint. Point Render at this repo and it reads this file:
+# creates a free web service from the Dockerfile. Set GROQ_API_KEY in the
+# dashboard (it's marked sync:false so it never lives in the repo).
+services:
+  - type: web
+    name: ask-my-docs
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: LLM_PROVIDER
+        value: groq
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-20b
+      - key: GROQ_API_KEY
+        sync: false

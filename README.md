@@ -6,6 +6,10 @@
 
 Hybrid retrieval (BM25 + vectors) · cross-encoder reranking · enforced citations · abstention · CI-gated evaluation · per-request observability
 
+![CI](https://github.com/AKB4901/ask-my-docs/actions/workflows/ci.yml/badge.svg)
+
+**Live demo:** _add your Render URL here after deploying_ · **[Deploy your own](#deploy-to-render-free)**
+
 </div>
 
 ---
@@ -77,11 +81,11 @@ You can query the built-in sample corpus, or **upload your own document** (PDF, 
 | Layer | Choice | Why |
 |---|---|---|
 | API + UI | FastAPI, one process | Clone → run, no separate frontend build |
-| Embeddings | `all-MiniLM-L6-v2` (local) | Small, CPU-friendly, runs under 6 GB VRAM |
+| Embeddings | `all-MiniLM-L6-v2` (ONNX) | Small, CPU-friendly, no PyTorch — fits a free 512 MB host |
 | Vector index | FAISS `IndexFlatIP` | Exact cosine search; instant at this corpus size |
 | Lexical | BM25 (`rank-bm25`) | Catches exact terms vectors miss |
 | Fusion | Reciprocal Rank Fusion | Scale-free, robust, dependency-light |
-| Reranker | `ms-marco-MiniLM-L-6-v2` cross-encoder | Precision over the fused candidates |
+| Reranker | `ms-marco-MiniLM-L-6-v2` (ONNX) | Precision over the fused candidates |
 | LLM | Groq (free) or Ollama (local) | Zero-budget by default, or fully offline |
 | Eval | Gold set + threshold gate | Turns "quality" into a CI check |
 | Observability | Per-stage timing + structured logs | The raw signal for regression detection |
@@ -121,6 +125,18 @@ Drop `.md` or `.txt` files into `data/docs/`, run `make ingest`, and ask away. T
 - **End-to-end** — answer keyword recall and citation validity (when an LLM is configured)
 
 Every metric has a floor in `eval/thresholds.yaml`. Drop below it — by changing chunk size, swapping a model, tweaking `k` — and the run exits non-zero and **CI fails the build**. This is the single most under-shown skill in RAG portfolios, so it's deliberately front-and-center here.
+
+## Deploy to Render (free)
+
+The repo includes a `render.yaml` and a `Dockerfile`, so deployment is:
+
+1. Push this repo to GitHub.
+2. On [render.com](https://render.com), create a **New → Web Service** and connect the repo (or use **New → Blueprint** to read `render.yaml` directly).
+3. Render detects the Dockerfile and builds it — the search index and both ONNX models are baked into the image at build time.
+4. Add one environment variable: `GROQ_API_KEY` (from [console.groq.com](https://console.groq.com/keys)). `LLM_PROVIDER` and `GROQ_MODEL` are already set by the blueprint.
+5. Deploy. Your app is live at `https://<name>.onrender.com`.
+
+The free tier sleeps after 15 minutes of inactivity, so the first request after idle takes ~30–60 s to wake (models are already cached in the image). Fine for a portfolio demo; add a short screen-capture GIF to this README so the project is provable even while the service is asleep.
 
 ## Outcomes
 
